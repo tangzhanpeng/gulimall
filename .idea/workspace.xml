@@ -21,6 +21,19 @@
     <property name="aspect.path.notification.shown" value="true" />
     <property name="settings.editor.selected.configurable" value="configurable.group.appearance" />
   </component>
+  <component name="RunManager">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="默认任务">
       <changelist id="941d29bd-ea52-42cd-9f21-0c8c4c35074d" name="默认变更列表" comment="" />
