@@ -6,7 +6,20 @@
 
     <groupId>com.tzp</groupId>
     <artifactId>gulimall</artifactId>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>gulimall-product</module>
+        <module>gulimall-common</module>
+        <module>gulimall-coupon</module>
+        <module>gulimall-gateway</module>
+        <module>gulimall-member</module>
+        <module>gulimall-order</module>
+        <module>gulimall-third-party</module>
+        <module>gulimall-ware</module>
+        <module>renren-fast</module>
+        <module>renren-generator</module>
+    </modules>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
