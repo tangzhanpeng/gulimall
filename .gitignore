@@ -2,6 +2,7 @@ target
 target/*
 *~
 .idea
+.idea/*
 .eml
 .project
 .settings

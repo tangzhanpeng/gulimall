@@ -1,0 +1,46 @@
+server:
+  port: 6001
+  servlet:
+    session:
+      timeout: 30m
+spring:
+  application:
+    name: gulimall-auth-server
+  cloud:
+    nacos:
+      discovery:
+        server-addr: nacos1:4001
+    sentinel:
+      transport:
+        dashboard: localhost:8080
+  redis:
+    host: gulimall
+    port: 6379
+  thymeleaf:
+    cache: false
+  zipkin:
+    base-url: http://gulimall:9411/
+    discovery-client-enabled: false
+    sender:
+      type: web
+  sleuth:
+    sampler:
+      probability: 1
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+feign:
+  httpclient:
+    connection-timeout: 10000
+  sentinel:
+    enabled: true
+
+wx:
+  open:
+    app_id: wxed9954c01bb89b47
+    app_secret: a7482517235173ddb4083788de60b90e
+    redirect_url: http://guli.shop/api/ucenter/wx/callback

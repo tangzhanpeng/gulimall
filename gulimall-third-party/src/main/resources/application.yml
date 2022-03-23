@@ -1,0 +1,33 @@
+server:
+  port: 11001
+
+spring:
+  application:
+    name: gulimall-third-party
+  cloud:
+    nacos:
+      discovery:
+        server-addr: nacos1:4001
+    sentinel:
+      transport:
+        dashboard: localhost:8080
+    alicloud:
+      access-key: LTAI5tHZ3va2cP8ZGk2K6f2R
+      secret-key: GK9J1Aa4mTlUL1NQddJqPakmoU5Tqv
+      oss:
+        endpoint: oss-cn-hangzhou.aliyuncs.com
+        bucket: gulimall-tzp
+      sms:
+        host: https://gyytz.market.alicloudapi.com/sms/smsSend
+        path: /sms/
+        skin: 1
+        sign: 175622
+        appcode: d49168b2db18453bbcd5197ebf3edb07
+  zipkin:
+    base-url: http://gulimall:9411/
+    discovery-client-enabled: false
+    sender:
+      type: web
+  sleuth:
+    sampler:
+      probability: 1

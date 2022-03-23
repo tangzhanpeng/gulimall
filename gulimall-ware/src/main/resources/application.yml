@@ -1,0 +1,80 @@
+server:
+  port: 13001
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    username: root
+    password: root
+    url: jdbc:mysql://gulimall:3306/gulimall_wms?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&autoReconnect=true&allowMultiQueries=true&zeroDateTimeBehavior=convertToNull&rewriteBatchedStatements=true&useSSL=false&allowPublicKeyRetrieval=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  application:
+    name: gulimall-ware
+  redis:
+    host: gulimall
+    port: 6379
+  cloud:
+    nacos:
+      discovery:
+        server-addr: nacos1:4001
+    sentinel:
+      transport:
+        dashboard: localhost:8080
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+  rabbitmq:
+    host: gulimall
+    port: 5672
+    virtual-host: /
+    publisher-confirm-type: correlated
+    publisher-returns: true
+    template:
+      mandatory: true
+    listener:
+      simple:
+        acknowledge-mode: manual
+  zipkin:
+    base-url: http://gulimall:9411/
+    discovery-client-enabled: false
+    sender:
+      type: web
+  sleuth:
+    sampler:
+      probability: 1
+
+mybatis-plus:
+  mapper-locations: classpath:/mapper/**/*.xml
+  global-config:
+    db-config:
+      id-type: auto
+
+#开启feign对sentinel的支持
+feign:
+  sentinel:
+    enabled: true
+
+
+logging:
+  level:
+    com.xunqi.gulimall: info
+
+#暴露所有端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+seata:
+  tx-service-group: my_test_tx_group
+  service:
+    vgroup-mapping:
+      my_test_tx_group: default
+  registry:
+    type: nacos
+    nacos:
+      server-addr: nacos1:4001
+      application: gulimall-seata
+      group: SEATA_GROUP
+      username: nacos
+      password: nacos
+

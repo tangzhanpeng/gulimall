@@ -1,0 +1,100 @@
+server:
+  port: 9001
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    username: root
+    password: root
+    url: jdbc:mysql://gulimall:3306/gulimall_oms?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&autoReconnect=true&allowMultiQueries=true&zeroDateTimeBehavior=convertToNull&rewriteBatchedStatements=true&useSSL=false&allowPublicKeyRetrieval=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  application:
+    name: gulimall-order
+  cloud:
+    nacos:
+      discovery:
+        server-addr: nacos1:4001
+    sentinel:
+      transport:
+        dashboard: localhost:8080
+  redis:
+    host: gulimall
+    port: 6379
+  thymeleaf:
+    cache: false
+  rabbitmq:
+    host: gulimall
+    port: 5672
+    virtual-host: /
+    publisher-confirm-type: correlated
+    publisher-returns: true
+    template:
+      mandatory: true
+    listener:
+      simple:
+        acknowledge-mode: manual
+  mvc:
+    date-format: yyyy-MM-dd HH:mm:ss
+  zipkin:
+    base-url: http://gulimall:9411/
+    discovery-client-enabled: false
+    sender:
+      type: web
+  sleuth:
+    sampler:
+      probability: 1
+
+mybatis-plus:
+  mapper-locations: classpath:/mapper/**/*.xml
+  global-config:
+    db-config:
+      id-type: auto
+
+#开启feign对sentinel的支持
+feign:
+  sentinel:
+    enabled: true
+
+#暴露所有端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+seata:
+  tx-service-group: my_test_tx_group
+  service:
+    vgroup-mapping:
+      my_test_tx_group: default
+  registry:
+    type: nacos
+    nacos:
+      server-addr: nacos1:4001
+      application: gulimall-seata
+      group: SEATA_GROUP
+      username: nacos
+      password: nacos
+
+gulimall:
+  thread:
+    coreSize: 20
+    maxSize: 20
+    keepAliveTime: 10
+
+alipay:
+  app_id: 2021000119642916
+  merchant_private_key: MIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQChPHyzZ+QXsnaGDIlAFLwmEs9uT5r4TDeN0M0b3uRi06whQrOdOCwW4k+Sgg8WgJ9jhGomGXyyXHl3KRNsOsNbL4dTcsH9N67wM+Zi+ojwIWXqv0ryYBWo/B5HF6Z1AbKdljko4f8ZyNA3Fdf/SqK5wQrF1odKyoP3bATa1FhxfsHSd0P4e3I6kp7+XF3PoeAuWFKv4JMgLxsX6HIkIcb91KLsZMk2BiV+ElLyi8u+KYZxAWn+k5/pGo3Rag7cmuVXntDa9yAJqkoBXCXeG+9ZvbRNrn8hipZkVM1FLHx52I533KAqW+7BUzDtkZvSmoyCfZ3n/bu5TvmDK2T+v7YnAgMBAAECggEARc6AVtRGBpR3iDXpPls70mgWcrX4bEPjUXzzMHvh+X+XaJcOWKU3QXkd5lp02dM6LsXnhzNFr5sl45dfF16hsdr0BgcLQexXyxtNRdEedIihLW9ArYs4FX+CRFlS8hmYEW42tSKTZcBxlUfZymev6ChR17G3xYPEetzDhVKmMAx3Iv/QuzW429NunbO3VHhN8jnVhFuo8ESEGAS0TCmDwUM4oJaImMARzcXwfDTA1S5FKUBJM6ojKG4/BvEZlYC1GyDmUkhbzlHoLEZNwC232ABcG61SVkxD3ADPNKCA0MujBea9vM9jn2Ra+osiUQhi7btsFFWV/dcVxPzEQL7t8QKBgQDTTtezdHkv0OATQNDVPohOL9k4/y0gOM76OWCsaBFMUOd09nNMzCFHGNaJEGCHY01qJTBTgWXD1RGDj2qNC31PpC73Y9+byasD3cx0bqpnGM/6IwqAEYd+3oF8hNGcUoSfGs4isYtiE4eaI2yOHD8PZEVlQiYsT+otcZHdpNulBQKBgQDDVooA6CJ8kzKWRK3BQvOeWZaK791kG5oMcBb0Q5mHhCw6iiJEpNupM3yVsmleEbb4ssRFo+QV6AeZ9HoZFH3m3g70V1O7HiXd+7t8wi7km988gMXm9VGMfGsK1VNWg9thTUUGQTVzlvgMPAF2MIgYdrUld/B6GykJYkpter1WOwKBgE1ipWoqMKuLQlSquxAta3u+2D2gbiVLyLkoxDe/kP4y7uEN1KH+a/1+oirmHYPXoSVLY0xhqiQy5swYfLwUxhqhlTWylNSX4ZJz6wmE8dD57Ei+Bn1qbgXPdPpmJeGq8rjV90ILZXFQl6uiZ4IP5CQ945A2zoYR6kAkRHg4hNwFAoGAcV6EccpIWazEq1nozkWhRsIQEUrtXvB2E8nqSJIDRRd84+zPvq8/nY/4Opl1ddcqLmTybMiV0/D6mGu/gVbXS2qNm1ojinIQ4Cj9w4af2KZuhZrnQQgX8EU1ivAMkiWs6WgDK4IlF5UDGXaqEoJQOoKK19gohXXF92BIegnGYYkCgYBwQR5o0y/0PPYzSD3wEtCIwkZ0NNohL5IvuajH59azj/3Eoi1hD+sAIzx+5e7QvMsUiGUsw8GR1MwWUvmWxj5I0CZGO5BTFRmqagi1yUFjXmP3VbQMw5oy8AIkNARiGsjl1us79YBSRy8hzrTCDmrwGXsVAMxuq9yNPredU2tI4g==
+  alipay_public_key: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoTx8s2fkF7J2hgyJQBS8JhLPbk+a+Ew3jdDNG97kYtOsIUKznTgsFuJPkoIPFoCfY4RqJhl8slx5dykTbDrDWy+HU3LB/Teu8DPmYvqI8CFl6r9K8mAVqPweRxemdQGynZY5KOH/GcjQNxXX/0qiucEKxdaHSsqD92wE2tRYcX7B0ndD+HtyOpKe/lxdz6HgLlhSr+CTIC8bF+hyJCHG/dSi7GTJNgYlfhJS8ovLvimGcQFp/pOf6RqN0WoO3JrlV57Q2vcgCapKAVwl3hvvWb20Ta5/IYqWZFTNRSx8ediOd9ygKlvuwVMw7ZGb0pqMgn2d5/27uU75gytk/r+2JwIDAQAB
+  notify_url: https://f801-115-206-152-165.ngrok.io/payed/notify
+  return_url: http://member.gulimall.com/memberOrder.html
+  sign_type: RSA2
+  charset: utf-8
+  gatewayUrl: https://openapi.alipaydev.com/gateway.do
+
+
+##微信相关配置
+#wx.appId=wxd898fcb01713c658
+#wx.mchId=1483469312
+#wx.mchKey=098F6BCD4621D373CADE4E832627B4F6
+#wx.notifyUrl=http://hjl.mynatapp.cc/pay/notify
+#wx.returnUrl=http://member.gulimall.com/memberOrder.html
